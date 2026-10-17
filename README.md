@@ -19,8 +19,10 @@ Dark mode follows the system setting until the reader picks one. The choice is s
 Install a tagged version straight from GitHub:
 
 ```bash
-npm install github:nickprignano/prignano-theme#v0.1.0
+npm install https://codeload.github.com/nickprignano/prignano-theme/tar.gz/refs/tags/v0.1.0
 ```
+
+The tarball URL needs no git or SSH key, so it installs the same way in Cloudflare's build image as it does locally.
 
 Then, in the site's layout:
 
@@ -70,7 +72,7 @@ import "prignano-theme/theme.css";
 ## Changing the theme
 
 1. Change it here through a pull request, bump `version` in `package.json`, and tag the merge commit (`v0.2.0`).
-2. In each site, update the dependency to the new tag in its own pull request.
+2. In each site, run the install command above with the new tag, in its own pull request.
 
 Sites stay on the version they pin until they're updated, so a theme change never breaks a site by surprise.
 
