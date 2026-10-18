@@ -1,12 +1,12 @@
 # prignano-theme
 
-The shared look for prignano.ai and every site under it (blog.prignano.ai and any future `*.prignano.ai` site): colours, dark mode, and the header with the avatar, name, bio, shared links and theme toggle.
+The shared look for prignano.ai and every site under it (blog.prignano.ai and any future `*.prignano.ai` site): colors, dark mode, and the header with the avatar, name, bio, shared links and theme toggle.
 
 It's plain CSS and JavaScript with no dependencies and no build step, so it works in Next.js, Astro or a static page.
 
 ## What's in it
 
-- `theme.css`: colour tokens for light and dark (`--bg`, `--fg`, `--muted`, `--card`, `--border`, `--accent`, `--active`, `--chip`, `--chip-fg`, `--code-bg`, `--art-bg`, `--font`), base body and link styles, and the header styles (`.ph-*`).
+- `theme.css`: color tokens for light and dark (`--bg`, `--fg`, `--muted`, `--card`, `--border`, `--accent`, `--active`, `--chip`, `--chip-fg`, `--code-bg`, `--art-bg`, `--font`), base body and link styles, and the header styles (`.ph-*`).
 - `headerHtml(options)`: the header's HTML, for rendering on the server.
 - `THEME_INIT_SCRIPT`: a one-line script to inline in `<head>` so a saved theme applies before the first paint.
 - `initThemeToggle()`: wires up the toggle in the browser.
