@@ -10,7 +10,7 @@ It's plain CSS and JavaScript with no dependencies and no build step, so it work
 - `headerHtml(options)`: the header's HTML, for rendering on the server.
 - `THEME_INIT_SCRIPT`: a one-line script to inline in `<head>` so a saved theme applies before the first paint.
 - `initThemeToggle()`: wires up the toggle in the browser.
-- `NAV` and `OWNER`: the shared links (Projects, Resume, Blog, GitHub) and the name and avatar.
+- `NAV` and `OWNER`: the shared links (Projects, Resume, Blog, GitHub, Contact) and the name, avatar and contact email.
 
 Dark mode follows the system setting until the reader picks one. The choice is saved in a cookie for the whole `prignano.ai` domain, so it follows them from site to site, with `localStorage` as a fallback.
 
@@ -19,7 +19,7 @@ Dark mode follows the system setting until the reader picks one. The choice is s
 Install a tagged version straight from GitHub:
 
 ```bash
-npm install https://codeload.github.com/nickprignano/prignano-theme/tar.gz/refs/tags/v0.1.0
+npm install https://codeload.github.com/nickprignano/prignano-theme/tar.gz/refs/tags/v0.2.0
 ```
 
 The tarball URL needs no git or SSH key, so it installs the same way in Cloudflare's build image as it does locally.
@@ -36,7 +36,7 @@ Then, in the site's layout:
 
 | Option | Purpose |
 | --- | --- |
-| `current` | Id of the link for the page being shown (`projects`, `resume`, `blog`, `github`, or one of `links`) |
+| `current` | Id of the link for the page being shown (`projects`, `resume`, `blog`, `github`, `contact`, or one of `links`) |
 | `bio` | Short line under the name |
 | `home` | Where the name and avatar link to (default `https://prignano.ai/`) |
 | `links` | Site-specific links (`{ id, label, href }`) placed before the shared ones |
@@ -71,7 +71,7 @@ import "prignano-theme/theme.css";
 
 ## Changing the theme
 
-1. Change it here through a pull request, bump `version` in `package.json`, and tag the merge commit (`v0.2.0`).
+1. Change it here through a pull request, bump `version` in `package.json`, and tag the merge commit (`v0.3.0`).
 2. In each site, run the install command above with the new tag, in its own pull request.
 
 Sites stay on the version they pin until they're updated, so a theme change never breaks a site by surprise.

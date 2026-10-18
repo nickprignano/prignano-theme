@@ -5,6 +5,7 @@
 export const OWNER = {
   name: "Nick Prignano",
   avatar: "https://github.com/nickprignano.png?size=112",
+  email: "nick@prignano.ai",
 };
 
 /** Links shown on every site, in order. `id` marks the current site or page. */
@@ -13,6 +14,7 @@ export const NAV = [
   { id: "resume", label: "Resume", href: "https://prignano.ai/resume" },
   { id: "blog", label: "Blog", href: "https://blog.prignano.ai/" },
   { id: "github", label: "GitHub", href: "https://github.com/nickprignano" },
+  { id: "contact", label: "Contact", href: `mailto:${OWNER.email}` },
 ];
 
 const STORAGE_KEY = "theme";

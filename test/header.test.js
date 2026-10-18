@@ -15,6 +15,10 @@ test("puts site links first and uses local paths for links on this site", () => 
   assert.match(html, /<a href="\/">Blog<\/a>/);
 });
 
+test("links Contact to the shared email address", () => {
+  assert.match(headerHtml(), /<a href="mailto:nick@prignano.ai">Contact<\/a><button/);
+});
+
 test("escapes the bio and omits it when empty", () => {
   assert.match(headerHtml({ bio: `<b>"x"</b>` }), /&lt;b&gt;&quot;x&quot;&lt;\/b&gt;/);
   assert.doesNotMatch(headerHtml(), /ph-bio/);

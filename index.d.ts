@@ -1,8 +1,8 @@
-export type NavId = "projects" | "resume" | "blog" | "github";
+export type NavId = "projects" | "resume" | "blog" | "github" | "contact";
 
 export type Link = { id?: string; label: string; href: string };
 
-export declare const OWNER: { name: string; avatar: string };
+export declare const OWNER: { name: string; avatar: string; email: string };
 export declare const NAV: ReadonlyArray<Link & { id: NavId }>;
 
 export type HeaderOptions = {
