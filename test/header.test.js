@@ -23,8 +23,12 @@ test("links Contact to the shared email address", () => {
 });
 
 test("draws the speaking invitation as a pill linking to the events page", () => {
-  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/events#speak" class="ph-cta">Book me to speak<\/a><button/);
+  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/events#speak" class="ph-cta">Book me to speak<\/a><\/nav>/);
   assert.match(headerHtml({ local: { speak: "/events#speak" } }), /<a href="\/events#speak" class="ph-cta">/);
+});
+
+test("puts the dark mode button before the links", () => {
+  assert.match(headerHtml(), /<nav[^>]*><button class="ph-theme-toggle"[\s\S]*?<\/button><a /);
 });
 
 test("escapes the bio and omits it when empty", () => {

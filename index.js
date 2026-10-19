@@ -53,10 +53,10 @@ export function headerHtml({ current, bio, home = "https://prignano.ai/", links 
     `<span class="ph-identity-text"><span class="ph-name">${escape(OWNER.name)}</span>` +
     (bio ? `<span class="ph-bio">${escape(bio)}</span>` : "") +
     `</span></a>` +
-    `<nav class="ph-links" aria-label="Site">${nav}` +
+    `<nav class="ph-links" aria-label="Site">` +
     `<button class="ph-theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">` +
     `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path></svg>` +
-    `</button></nav></header>`
+    `</button>${nav}</nav></header>`
   );
 }
 
