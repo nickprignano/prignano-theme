@@ -18,13 +18,14 @@ test("sorts site links in with the shared ones and uses local paths for links on
   assert.match(html, /<a href="\/">Blog<\/a>/);
 });
 
-test("links Contact to the shared email address", () => {
-  assert.match(headerHtml(), /<a href="mailto:nick@prignano.ai">Contact<\/a>/);
+test("links Contact to the contact page on prignano.ai", () => {
+  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/contact">Contact<\/a>/);
+  assert.match(headerHtml({ local: { contact: "/contact" } }), /<a href="\/contact">Contact<\/a>/);
 });
 
-test("draws the speaking invitation as a pill linking to the events page", () => {
-  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/events#speak" class="ph-cta">Book me to speak<\/a><\/nav>/);
-  assert.match(headerHtml({ local: { speak: "/events#speak" } }), /<a href="\/events#speak" class="ph-cta">/);
+test("draws the speaking invitation as a pill linking to the contact form", () => {
+  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/contact\?topic=speaking" class="ph-cta">Book me to speak<\/a><\/nav>/);
+  assert.match(headerHtml({ local: { speak: "/contact?topic=speaking" } }), /<a href="\/contact\?topic=speaking" class="ph-cta">/);
 });
 
 test("puts the dark mode button before the links", () => {

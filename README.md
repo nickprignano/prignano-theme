@@ -10,7 +10,7 @@ It's plain CSS and JavaScript with no dependencies and no build step, so it work
 - `headerHtml(options)`: the header's HTML, for rendering on the server.
 - `THEME_INIT_SCRIPT`: a one-line script to inline in `<head>` so a saved theme applies before the first paint.
 - `initThemeToggle()`: wires up the toggle in the browser.
-- `NAV` and `OWNER`: the shared links (Blog, Contact, GitHub, Projects, Resume, and the Book me to speak pill) and the name, avatar and contact email.
+- `NAV` and `OWNER`: the shared links (Blog, Contact, GitHub, Projects, Resume, and the Book me to speak pill) and the name, avatar and contact email. Contact goes to the contact page on prignano.ai, which lists Nick's socials and has the message form; Book me to speak opens the same form with the speaking topic picked.
 
 Dark mode follows the system setting until the reader picks one. The choice is saved in a cookie for the whole `prignano.ai` domain, so it follows them from site to site, with `localStorage` as a fallback.
 

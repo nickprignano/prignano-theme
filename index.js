@@ -18,8 +18,8 @@ export const NAV = [
   { id: "resume", label: "Resume", href: "https://prignano.ai/resume" },
   { id: "blog", label: "Blog", href: "https://blog.prignano.ai/" },
   { id: "github", label: "GitHub", href: "https://github.com/nickprignano" },
-  { id: "speak", label: "Book me to speak", href: "https://prignano.ai/events#speak", cta: true },
-  { id: "contact", label: "Contact", href: `mailto:${OWNER.email}` },
+  { id: "speak", label: "Book me to speak", href: "https://prignano.ai/contact?topic=speaking", cta: true },
+  { id: "contact", label: "Contact", href: "https://prignano.ai/contact" },
 ];
 
 const STORAGE_KEY = "theme";
