@@ -4,7 +4,7 @@ import { headerHtml, NAV, THEME_INIT_SCRIPT } from "../index.js";
 
 test("lists the shared links in order and marks the current one", () => {
   const html = headerHtml({ current: "resume", bio: "Hi" });
-  const labels = [...html.matchAll(/<a href="[^"]*"( aria-current="page")?>([^<]+)<\/a>/g)];
+  const labels = [...html.matchAll(/<a href="[^"]*"(?: class="[^"]*")?( aria-current="page")?>([^<]+)<\/a>/g)];
   assert.deepEqual(labels.map((m) => m[2]), NAV.map((l) => l.label));
   assert.deepEqual(labels.filter((m) => m[1]).map((m) => m[2]), ["Resume"]);
 });
@@ -17,6 +17,11 @@ test("puts site links first and uses local paths for links on this site", () => 
 
 test("links Contact to the shared email address", () => {
   assert.match(headerHtml(), /<a href="mailto:nick@prignano.ai">Contact<\/a><button/);
+});
+
+test("draws the speaking invitation as a pill linking to the events page", () => {
+  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/events#speak" class="ph-cta">Book me to speak<\/a><a href="mailto:/);
+  assert.match(headerHtml({ local: { speak: "/events#speak" } }), /<a href="\/events#speak" class="ph-cta">/);
 });
 
 test("escapes the bio and omits it when empty", () => {

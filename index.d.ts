@@ -1,6 +1,7 @@
-export type NavId = "projects" | "resume" | "blog" | "github" | "contact";
+export type NavId = "projects" | "resume" | "blog" | "github" | "speak" | "contact";
 
-export type Link = { id?: string; label: string; href: string };
+/** `cta` draws the link as a bold pill. */
+export type Link = { id?: string; label: string; href: string; cta?: boolean };
 
 export declare const OWNER: { name: string; avatar: string; email: string };
 export declare const NAV: ReadonlyArray<Link & { id: NavId }>;
