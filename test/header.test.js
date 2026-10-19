@@ -4,7 +4,7 @@ import { headerHtml, NAV, THEME_INIT_SCRIPT } from "../index.js";
 
 test("lists the shared links in order and marks the current one", () => {
   const html = headerHtml({ current: "resume", bio: "Hi" });
-  const labels = [...html.matchAll(/<a href="[^"]*"( aria-current="page")?>([^<]+)<\/a>/g)];
+  const labels = [...html.matchAll(/<a href="[^"]*"(?: class="[^"]*")?( aria-current="page")?>([^<]+)<\/a>/g)];
   assert.deepEqual(labels.map((m) => m[2]), NAV.map((l) => l.label));
   assert.deepEqual(labels.filter((m) => m[1]).map((m) => m[2]), ["Resume"]);
 });
@@ -18,6 +18,11 @@ test("puts site links first and uses local paths for links on this site", () => 
 test("links Contact to the contact page on prignano.ai", () => {
   assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/contact">Contact<\/a><button/);
   assert.match(headerHtml({ local: { contact: "/contact" } }), /<a href="\/contact">Contact<\/a>/);
+});
+
+test("draws the speaking invitation as a pill linking to the contact form", () => {
+  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/contact\?topic=speaking" class="ph-cta">Book me to speak<\/a><a href="https:\/\/prignano.ai\/contact">/);
+  assert.match(headerHtml({ local: { speak: "/contact?topic=speaking" } }), /<a href="\/contact\?topic=speaking" class="ph-cta">/);
 });
 
 test("escapes the bio and omits it when empty", () => {

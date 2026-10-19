@@ -8,12 +8,16 @@ export const OWNER = {
   email: "nick@prignano.ai",
 };
 
-/** Links shown on every site, in order. `id` marks the current site or page. */
+/**
+ * Links shown on every site, in order. `id` marks the current site or page;
+ * `cta` draws the link as a bold pill (used for the speaking invitation).
+ */
 export const NAV = [
   { id: "projects", label: "Projects", href: "https://prignano.ai/" },
   { id: "resume", label: "Resume", href: "https://prignano.ai/resume" },
   { id: "blog", label: "Blog", href: "https://blog.prignano.ai/" },
   { id: "github", label: "GitHub", href: "https://github.com/nickprignano" },
+  { id: "speak", label: "Book me to speak", href: "https://prignano.ai/contact?topic=speaking", cta: true },
   { id: "contact", label: "Contact", href: "https://prignano.ai/contact" },
 ];
 
@@ -37,7 +41,8 @@ export function headerHtml({ current, bio, home = "https://prignano.ai/", links 
   const nav = items
     .map((l) => {
       const here = l.id !== undefined && l.id === current ? ' aria-current="page"' : "";
-      return `<a href="${escape(l.href)}"${here}>${escape(l.label)}</a>`;
+      const cta = l.cta ? ' class="ph-cta"' : "";
+      return `<a href="${escape(l.href)}"${cta}${here}>${escape(l.label)}</a>`;
     })
     .join("");
   return (

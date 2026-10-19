@@ -10,7 +10,7 @@ It's plain CSS and JavaScript with no dependencies and no build step, so it work
 - `headerHtml(options)`: the header's HTML, for rendering on the server.
 - `THEME_INIT_SCRIPT`: a one-line script to inline in `<head>` so a saved theme applies before the first paint.
 - `initThemeToggle()`: wires up the toggle in the browser.
-- `NAV` and `OWNER`: the shared links (Projects, Resume, Blog, GitHub, Contact) and the name, avatar and contact email. Contact goes to the contact page on prignano.ai, which lists Nick's socials and has the message form.
+- `NAV` and `OWNER`: the shared links (Projects, Resume, Blog, GitHub, Book me to speak, Contact) and the name, avatar and contact email. Contact goes to the contact page on prignano.ai, which lists Nick's socials and has the message form; Book me to speak opens the same form with the speaking topic picked.
 
 Dark mode follows the system setting until the reader picks one. The choice is saved in a cookie for the whole `prignano.ai` domain, so it follows them from site to site, with `localStorage` as a fallback.
 
@@ -36,10 +36,10 @@ Then, in the site's layout:
 
 | Option | Purpose |
 | --- | --- |
-| `current` | Id of the link for the page being shown (`projects`, `resume`, `blog`, `github`, `contact`, or one of `links`) |
+| `current` | Id of the link for the page being shown (`projects`, `resume`, `blog`, `github`, `speak`, `contact`, or one of `links`) |
 | `bio` | Short line under the name |
 | `home` | Where the name and avatar link to (default `https://prignano.ai/`) |
-| `links` | Site-specific links (`{ id, label, href }`) placed before the shared ones |
+| `links` | Site-specific links (`{ id, label, href, cta }`) placed before the shared ones; `cta: true` draws one as a pill |
 | `local` | Relative paths for shared links that live on the current site, e.g. `{ blog: "/" }` on the blog |
 
 ### Next.js
