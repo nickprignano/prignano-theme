@@ -9,8 +9,9 @@ export const OWNER = {
 };
 
 /**
- * Links shown on every site, in order. `id` marks the current site or page;
- * `cta` draws the link as a bold pill (used for the speaking invitation).
+ * Links shown on every site. The header sorts them by label, with `cta`
+ * links (drawn as a bold pill, used for the speaking invitation) last.
+ * `id` marks the current site or page.
  */
 export const NAV = [
   { id: "projects", label: "Projects", href: "https://prignano.ai/" },
@@ -29,7 +30,7 @@ const escape = (s) =>
 
 /**
  * The header's HTML. `current` is the NAV id of the page being shown. `links`
- * are extra site-specific links placed before the shared ones. `home` is where
+ * are extra site-specific links, sorted in with the shared ones by label. `home` is where
  * the name and avatar link to. Links on the current site can be made relative
  * with `local`, a map from NAV id to path.
  */
@@ -37,7 +38,7 @@ export function headerHtml({ current, bio, home = "https://prignano.ai/", links 
   const items = [
     ...links,
     ...NAV.map((l) => ({ ...l, href: local[l.id] ?? l.href })),
-  ];
+  ].sort((a, b) => Boolean(a.cta) - Boolean(b.cta) || a.label.localeCompare(b.label, "en"));
   const nav = items
     .map((l) => {
       const here = l.id !== undefined && l.id === current ? ' aria-current="page"' : "";
@@ -52,10 +53,10 @@ export function headerHtml({ current, bio, home = "https://prignano.ai/", links 
     `<span class="ph-identity-text"><span class="ph-name">${escape(OWNER.name)}</span>` +
     (bio ? `<span class="ph-bio">${escape(bio)}</span>` : "") +
     `</span></a>` +
-    `<nav class="ph-links" aria-label="Site">${nav}` +
+    `<nav class="ph-links" aria-label="Site">` +
     `<button class="ph-theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">` +
     `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path></svg>` +
-    `</button></nav></header>`
+    `</button>${nav}</nav></header>`
   );
 }
 
