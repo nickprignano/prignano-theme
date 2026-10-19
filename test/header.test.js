@@ -50,3 +50,7 @@ test("init script reads the cookie before localStorage", () => {
   delete set.theme;
   assert.equal(run("theme=purple", null), undefined);
 });
+
+test("links Projects to the projects page on prignano.ai", () => {
+  assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/projects">Projects<\/a>/);
+});
