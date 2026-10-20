@@ -49,7 +49,7 @@ import { headerHtml, THEME_INIT_SCRIPT } from "prignano-theme";
 import "prignano-theme/theme.css";
 
 <head><script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} /></head>
-<div dangerouslySetInnerHTML={{ __html: headerHtml({ current: "projects", local: { projects: "/", resume: "/resume" } }) }} />
+<div dangerouslySetInnerHTML={{ __html: headerHtml({ current: "projects", local: { projects: "/projects", resume: "/resume" } }) }} />
 ```
 
 Call `initThemeToggle()` from a small client component's `useEffect`.

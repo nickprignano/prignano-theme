@@ -14,7 +14,7 @@ export const OWNER = {
  * `id` marks the current site or page.
  */
 export const NAV = [
-  { id: "projects", label: "Projects", href: "https://prignano.ai/" },
+  { id: "projects", label: "Projects", href: "https://prignano.ai/projects" },
   { id: "resume", label: "Resume", href: "https://prignano.ai/resume" },
   { id: "blog", label: "Blog", href: "https://blog.prignano.ai/" },
   { id: "github", label: "GitHub", href: "https://github.com/nickprignano" },
