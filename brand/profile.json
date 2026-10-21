@@ -1,0 +1,140 @@
+{
+  "$schema": "./profile.schema.json",
+  "schemaVersion": 1,
+  "name": "prignano.ai",
+  "tagline": "The shared look for prignano.ai and every site under it.",
+  "summary": "Colors, dark mode and the shared header for prignano.ai and its subdomains, as one CSS file and a small script with no build step.",
+  "visibility": "public",
+  "updated": "2026-10-21",
+  "sourceOfTruth": {
+    "tokens": "theme.css",
+    "header": "index.js",
+    "docs": "README.md"
+  },
+  "release": {
+    "version": "0.6.0",
+    "tag": "v0.6.0",
+    "repo": "https://github.com/nickprignano/prignano-theme"
+  },
+  "colors": {
+    "--bg": {
+      "light": "#f6f7f9",
+      "dark": "#0d1117",
+      "use": "Page background."
+    },
+    "--fg": {
+      "light": "#111418",
+      "dark": "#e6edf3",
+      "use": "Text."
+    },
+    "--muted": {
+      "light": "#5f6873",
+      "dark": "#8b949e",
+      "use": "Secondary text, the bio line."
+    },
+    "--card": {
+      "light": "#ffffff",
+      "dark": "#151b23",
+      "use": "Cards, the avatar ring fill and the theme toggle."
+    },
+    "--border": {
+      "light": "#e3e6ea",
+      "dark": "#2a313c",
+      "use": "Lines and card borders."
+    },
+    "--accent": {
+      "light": "#2f6feb",
+      "dark": "#58a6ff",
+      "use": "Links, focus rings and the call-to-action pill."
+    },
+    "--active": {
+      "light": "#1f9d55",
+      "dark": "#3fb950",
+      "use": "Live or success state, always with a word."
+    },
+    "--chip": {
+      "light": "#eef3fe",
+      "dark": "#1a2a44",
+      "use": "Tag chip background."
+    },
+    "--chip-fg": {
+      "light": "#2451b3",
+      "dark": "#9cc2ff",
+      "use": "Tag chip text."
+    },
+    "--code-bg": {
+      "light": "#f3f5f8",
+      "dark": "#0b0f15",
+      "use": "Code block background."
+    },
+    "--art-bg": {
+      "light": "linear-gradient(135deg, #1b2230, #121821)",
+      "dark": "linear-gradient(135deg, #1a212c, #121821)",
+      "use": "Placeholder art behind project cards (a gradient)."
+    }
+  },
+  "roles": {
+    "background": "--bg",
+    "surface": "--card",
+    "text": "--fg",
+    "muted": "--muted",
+    "line": "--border",
+    "accent": "--accent",
+    "onAccent": "--bg"
+  },
+  "type": {
+    "display": {
+      "family": "system-ui",
+      "fallback": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "weights": [
+        700
+      ],
+      "googleFonts": "",
+      "use": "The name in the header and page headings; tight letter spacing (-0.02em)."
+    },
+    "body": {
+      "family": "system-ui",
+      "fallback": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "weights": [
+        400,
+        700
+      ],
+      "googleFonts": "",
+      "use": "Everything else. The system stack only: no web fonts to host or load."
+    }
+  },
+  "shape": {
+    "--ph-width": "min(1080px, calc(100vw - 48px)); calc(100vw - 32px) below 720px",
+    "pill": "999px radius",
+    "toggle": "30px circle"
+  },
+  "assets": [
+    {
+      "file": "theme.css",
+      "kind": "source",
+      "background": "any",
+      "use": "The token stylesheet and header styles. Sites import it before their own styles."
+    }
+  ],
+  "starters": {},
+  "required": [
+    {
+      "id": "header",
+      "text": "The shared header from headerHtml(): avatar, name, bio, the shared links and the theme toggle.",
+      "where": "top of every page"
+    }
+  ],
+  "voice": {
+    "language": "en-US",
+    "rules": [
+      "Plain, short sentences.",
+      "Say what a thing does, not how it is built."
+    ]
+  },
+  "rules": [
+    "Colors only through the tokens in theme.css; a new color is added there first, with light and dark values.",
+    "Dark mode follows the system until the reader picks one, and the pick is shared across the subdomains.",
+    "Import a tagged version of the package; never copy theme.css by hand or load it from a CDN.",
+    "No sideways scroll at 390px; light and dark both designed."
+  ]
+}
