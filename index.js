@@ -16,6 +16,7 @@ export const OWNER = {
 export const NAV = [
   { id: "projects", label: "Projects", href: "https://prignano.ai/projects" },
   { id: "resume", label: "Resume", href: "https://prignano.ai/resume" },
+  { id: "games", label: "Games", href: "https://prignano.ai/games" },
   { id: "blog", label: "Blog", href: "https://blog.prignano.ai/" },
   { id: "github", label: "GitHub", href: "https://github.com/nickprignano" },
   { id: "speak", label: "Book me to speak", href: "https://prignano.ai/contact?topic=speaking", cta: true },

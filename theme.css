@@ -74,9 +74,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .ph-identity:hover { text-decoration: none; }
 .ph-avatar { border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; background: var(--card); }
 .ph-identity-text { display: flex; flex-direction: column; min-width: 0; }
-.ph-name { font-size: clamp(1.25rem, 3.2vh, 1.75rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+.ph-name { font-size: clamp(1.25rem, 3.2vh, 1.75rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; white-space: nowrap; }
 .ph-bio { margin-top: 2px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ph-links { margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 0.9rem; flex-shrink: 0; }
+/* When the links don't fit beside the name, they wrap onto a second row, right-aligned. */
+.ph-links { margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px 16px; font-size: 0.9rem; }
 .ph-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
 /* A call-to-action link, drawn as a pill so it stands out. */
 .ph-links a.ph-cta {
@@ -97,7 +98,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .ph-identity { gap: 12px; }
   .ph-name { font-size: 1.25rem; }
   .ph-bio { font-size: 0.875rem; }
-  .ph-links { margin-left: 0; width: 100%; flex-wrap: wrap; gap: 6px 16px; font-size: 0.925rem; }
+  .ph-links { margin-left: 0; width: 100%; justify-content: flex-start; font-size: 0.925rem; }
 }
 
 @media print {

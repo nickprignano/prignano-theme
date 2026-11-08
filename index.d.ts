@@ -1,4 +1,4 @@
-export type NavId = "projects" | "resume" | "blog" | "github" | "speak" | "contact";
+export type NavId = "projects" | "resume" | "games" | "blog" | "github" | "speak" | "contact";
 
 /** `cta` draws the link as a bold pill. */
 export type Link = { id?: string; label: string; href: string; cta?: boolean };
