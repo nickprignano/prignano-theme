@@ -12,8 +12,8 @@
     "docs": "README.md"
   },
   "release": {
-    "version": "0.6.0",
-    "tag": "v0.6.0",
+    "version": "0.8.0",
+    "tag": "v0.8.0",
     "repo": "https://github.com/nickprignano/prignano-theme"
   },
   "colors": {
@@ -43,12 +43,12 @@
       "use": "Lines and card borders."
     },
     "--accent": {
-      "light": "#2f6feb",
+      "light": "#2563d6",
       "dark": "#58a6ff",
       "use": "Links, focus rings and the call-to-action pill."
     },
     "--active": {
-      "light": "#1f9d55",
+      "light": "#17804a",
       "dark": "#3fb950",
       "use": "Live or success state, always with a word."
     },

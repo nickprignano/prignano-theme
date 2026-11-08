@@ -7,13 +7,13 @@ const labelsOf = (html) => [...html.matchAll(/<a href="[^"]*"(?: class="[^"]*")?
 test("sorts the shared links by label, keeps the pill last and marks the current one", () => {
   const labels = labelsOf(headerHtml({ current: "resume", bio: "Hi" }));
   assert.equal(labels.length, NAV.length);
-  assert.deepEqual(labels.map((m) => m[2]), ["Blog", "Contact", "GitHub", "Projects", "Resume", "Book me to speak"]);
+  assert.deepEqual(labels.map((m) => m[2]), ["Blog", "Contact", "Games", "GitHub", "Projects", "Resume", "Book me to speak"]);
   assert.deepEqual(labels.filter((m) => m[1]).map((m) => m[2]), ["Resume"]);
 });
 
 test("sorts site links in with the shared ones and uses local paths for links on this site", () => {
   const html = headerHtml({ links: [{ id: "tags", label: "Tags", href: "/tags/" }, { id: "about", label: "About", href: "/about/" }], local: { blog: "/" }, current: "tags" });
-  assert.deepEqual(labelsOf(html).map((m) => m[2]), ["About", "Blog", "Contact", "GitHub", "Projects", "Resume", "Tags", "Book me to speak"]);
+  assert.deepEqual(labelsOf(html).map((m) => m[2]), ["About", "Blog", "Contact", "Games", "GitHub", "Projects", "Resume", "Tags", "Book me to speak"]);
   assert.match(html, /<a href="\/tags\/" aria-current="page">Tags<\/a>/);
   assert.match(html, /<a href="\/">Blog<\/a>/);
 });
