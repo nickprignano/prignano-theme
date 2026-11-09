@@ -5,15 +5,15 @@
   "tagline": "The shared look for prignano.ai and every site under it.",
   "summary": "Colors, dark mode and the shared header for prignano.ai and its subdomains, as one CSS file and a small script with no build step.",
   "visibility": "public",
-  "updated": "2026-10-21",
+  "updated": "2026-11-09",
   "sourceOfTruth": {
     "tokens": "theme.css",
     "header": "index.js",
     "docs": "README.md"
   },
   "release": {
-    "version": "0.8.0",
-    "tag": "v0.8.0",
+    "version": "0.9.0",
+    "tag": "v0.9.0",
     "repo": "https://github.com/nickprignano/prignano-theme"
   },
   "colors": {
@@ -114,6 +114,12 @@
       "kind": "source",
       "background": "any",
       "use": "The token stylesheet and header styles. Sites import it before their own styles."
+    },
+    {
+      "file": "art/index.js",
+      "kind": "source",
+      "background": "dark",
+      "use": "The line-art library: generative styles drawn on a canvas, used by the cards on prignano.ai and by Vibes. Always on its own dark background."
     }
   ],
   "starters": {},

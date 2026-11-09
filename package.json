@@ -1,14 +1,15 @@
 {
   "name": "prignano-theme",
-  "version": "0.8.0",
-  "description": "Shared header, colors and dark-mode toggle for prignano.ai and its subdomains",
+  "version": "0.9.0",
+  "description": "Shared header, colors, dark-mode toggle and line art for prignano.ai and its subdomains",
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": { "types": "./index.d.ts", "default": "./index.js" },
-    "./theme.css": "./theme.css"
+    "./theme.css": "./theme.css",
+    "./art/*": "./art/*"
   },
-  "files": ["index.js", "index.d.ts", "theme.css"],
+  "files": ["index.js", "index.d.ts", "theme.css", "art"],
   "sideEffects": ["*.css"],
   "scripts": {
     "test": "node --test"
