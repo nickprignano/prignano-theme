@@ -1,0 +1,104 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Art scan</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script type="module">
+  // Test page for tools/flash-scan.mjs and tools/preview.mjs: draws one style
+  // with a fixed time step and reports what it drew.
+  import { createPiece, STYLES } from "../art/index.js";
+  import { countFlashes, flashArea } from "../art/flash.js";
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+  window.STYLE_IDS = STYLES.map((s) => s.id);
+  window.PERIODIC = STYLES.filter((s) => s.pattern === "periodic").map((s) => s.id);
+
+  // Mean relative luminance and red-flash measure per grid cell.
+  const LIN = new Float32Array(256).map((_, v) => (v / 255 <= 0.04045 ? v / 255 / 12.92 : ((v / 255 + 0.055) / 1.055) ** 2.4));
+  // Measured on a quarter-size copy (each pixel the average of 4x4), which is
+  // far finer than the grid cells and keeps a 20-second scan quick.
+  const small = document.createElement("canvas");
+  small.width = canvas.width / 4;
+  small.height = canvas.height / 4;
+  const sctx = small.getContext("2d", { willReadFrequently: true });
+  function measure(cols, rows) {
+    sctx.drawImage(canvas, 0, 0, small.width, small.height);
+    const { width: w, height: h } = small;
+    const data = sctx.getImageData(0, 0, w, h).data;
+    const lum = new Float32Array(cols * rows);
+    const red = new Float32Array(cols * rows);
+    const cw = w / cols, ch = h / rows;
+    for (let y = 0; y < h; y++) {
+      const row = Math.floor(y / ch) * cols;
+      for (let x = 0; x < w; x++) {
+        const i = (y * w + x) * 4;
+        const R = data[i] / 255, G = data[i + 1] / 255, B = data[i + 2] / 255;
+        const cell = row + Math.floor(x / cw);
+        lum[cell] += 0.2126 * LIN[data[i]] + 0.7152 * LIN[data[i + 1]] + 0.0722 * LIN[data[i + 2]];
+        if (R + G + B > 0 && R / (R + G + B) >= 0.8) red[cell] += Math.max(0, (R - G - B) * 320);
+      }
+    }
+    const n = cw * ch;
+    for (let k = 0; k < lum.length; k++) {
+      lum[k] /= n;
+      red[k] /= n;
+    }
+    return { lum: Array.from(lum), red: Array.from(red) };
+  }
+
+  // Plays a style (or a transition from one style to another) for some seconds
+  // at 60 frames a second, measures every frame, and counts the flashes.
+  window.scan = ({ style, seed, seconds, cols, rows, next = null, periodicPair = false }) => {
+    const a = document.createElement("canvas");
+    a.width = canvas.width;
+    a.height = canvas.height;
+    const b = document.createElement("canvas");
+    b.width = canvas.width;
+    b.height = canvas.height;
+    const pa = createPiece(a, { seed, style, mode: "full", grow: true });
+    const pb = next ? createPiece(b, { seed: seed + "-next", style: next, mode: "full", grow: true }) : null;
+    const frames = [];
+    const dt = 1 / 60;
+    for (let f = 0; f < seconds * 60; f++) {
+      const t = f * dt;
+      pa.step(dt);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (!pb) ctx.drawImage(a, 0, 0);
+      else {
+        // The transition starts at 1 s. A periodic pair fades out, then in.
+        const start = 1;
+        const x = Math.max(0, t - start);
+        if (x > 0) pb.step(dt);
+        if (periodicPair) {
+          const out = Math.max(0, 1 - x / 1.5), inn = Math.max(0, Math.min(1, (x - 1.5) / 1.5));
+          ctx.globalAlpha = out;
+          ctx.drawImage(a, 0, 0);
+          ctx.globalAlpha = inn;
+          if (inn > 0) ctx.drawImage(b, 0, 0);
+        } else {
+          // The old piece fades out on top of the new one.
+          const mix = Math.min(1, x / 3);
+          if (mix > 0) ctx.drawImage(b, 0, 0);
+          ctx.globalAlpha = 1 - mix;
+          ctx.drawImage(a, 0, 0);
+        }
+        ctx.globalAlpha = 1;
+      }
+      frames.push(measure(cols, rows));
+    }
+    const { width: w, height: h } = canvas;
+    const counts = countFlashes(frames, { fps: 60, cellArea: (w * h) / (cols * rows), area: flashArea(w, h) });
+    const peak = Math.max(...frames.map((fr) => Math.max(...fr.lum)));
+    return { ...counts, peak };
+  };
+
+  // Draws a style's settled still frame for previews.
+  window.still = ({ style, seed, mode = "full", seconds = 0 }) => {
+    const p = createPiece(canvas, { seed, style, mode, grow: seconds > 0 });
+    if (seconds > 0) for (let t = 0; t < seconds; t += 1 / 30) p.step(1 / 30);
+    else p.step(0);
+    return true;
+  };
+</script>
