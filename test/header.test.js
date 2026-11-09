@@ -1,19 +1,19 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { headerHtml, NAV, THEME_INIT_SCRIPT } from "../index.js";
+import { footerHtml, headerHtml, NAV, THEME_INIT_SCRIPT } from "../index.js";
 
 const labelsOf = (html) => [...html.matchAll(/<a href="[^"]*"(?: class="[^"]*")?( aria-current="page")?>([^<]+)<\/a>/g)];
 
 test("sorts the shared links by label, keeps the pill last and marks the current one", () => {
   const labels = labelsOf(headerHtml({ current: "resume", bio: "Hi" }));
   assert.equal(labels.length, NAV.length);
-  assert.deepEqual(labels.map((m) => m[2]), ["Blog", "Contact", "Games", "GitHub", "Projects", "Resume", "Book me to speak"]);
+  assert.deepEqual(labels.map((m) => m[2]), ["Blog", "Contact", "Games", "Projects", "Resume", "Book me to speak"]);
   assert.deepEqual(labels.filter((m) => m[1]).map((m) => m[2]), ["Resume"]);
 });
 
 test("sorts site links in with the shared ones and uses local paths for links on this site", () => {
   const html = headerHtml({ links: [{ id: "tags", label: "Tags", href: "/tags/" }, { id: "about", label: "About", href: "/about/" }], local: { blog: "/" }, current: "tags" });
-  assert.deepEqual(labelsOf(html).map((m) => m[2]), ["About", "Blog", "Contact", "Games", "GitHub", "Projects", "Resume", "Tags", "Book me to speak"]);
+  assert.deepEqual(labelsOf(html).map((m) => m[2]), ["About", "Blog", "Contact", "Games", "Projects", "Resume", "Tags", "Book me to speak"]);
   assert.match(html, /<a href="\/tags\/" aria-current="page">Tags<\/a>/);
   assert.match(html, /<a href="\/">Blog<\/a>/);
 });
@@ -53,4 +53,15 @@ test("init script reads the cookie before localStorage", () => {
 
 test("links Projects to the projects page on prignano.ai", () => {
   assert.match(headerHtml(), /<a href="https:\/\/prignano.ai\/projects">Projects<\/a>/);
+});
+
+test("leaves GitHub out of the header", () => {
+  assert.doesNotMatch(headerHtml(), /GitHub/);
+});
+
+test("footer has the copyright, the site note, then shared and site links", () => {
+  const html = footerHtml({ year: 2026, note: 'Posts are <a href="/l">CC BY</a>.', links: [{ label: "RSS", href: "/rss.xml" }] });
+  assert.match(html, /^<footer class="ph-footer"><p>© 2026 Nick Prignano\. Posts are <a href="\/l">CC BY<\/a>\.<\/p>/);
+  assert.deepEqual([...html.matchAll(/ph-footer-links|>([^<]+)<\/a>/g)].map((m) => m[1] ?? "|").join(" "), "CC BY | GitHub LinkedIn RSS");
+  assert.match(footerHtml({ year: 2026 }), /<p>© 2026 Nick Prignano\.<\/p>/);
 });

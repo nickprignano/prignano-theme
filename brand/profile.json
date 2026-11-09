@@ -5,15 +5,15 @@
   "tagline": "The shared look for prignano.ai and every site under it.",
   "summary": "Colors, dark mode and the shared header for prignano.ai and its subdomains, as one CSS file and a small script with no build step.",
   "visibility": "public",
-  "updated": "2026-10-21",
+  "updated": "2026-11-09",
   "sourceOfTruth": {
     "tokens": "theme.css",
     "header": "index.js",
     "docs": "README.md"
   },
   "release": {
-    "version": "0.8.0",
-    "tag": "v0.8.0",
+    "version": "0.9.0",
+    "tag": "v0.9.0",
     "repo": "https://github.com/nickprignano/prignano-theme"
   },
   "colors": {
@@ -104,7 +104,8 @@
     }
   },
   "shape": {
-    "--ph-width": "min(1080px, calc(100vw - 48px)); calc(100vw - 32px) below 720px",
+    "--page-width": "min(1080px, calc(100vw - 48px)); 16px gutters below 720px. Header, footer and every page share it",
+    "--measure": "72ch, the cap for long prose",
     "pill": "999px radius",
     "toggle": "30px circle"
   },
@@ -122,6 +123,11 @@
       "id": "header",
       "text": "The shared header from headerHtml(): avatar, name, bio, the shared links and the theme toggle.",
       "where": "top of every page"
+    },
+    {
+      "id": "footer",
+      "text": "The shared footer from footerHtml(): copyright, an optional site note, GitHub, LinkedIn and the site's own links.",
+      "where": "bottom of every page except one-screen pages"
     }
   ],
   "voice": {
@@ -135,6 +141,7 @@
     "Colors only through the tokens in theme.css; a new color is added there first, with light and dark values.",
     "Dark mode follows the system until the reader picks one, and the pick is shared across the subdomains.",
     "Import a tagged version of the package; never copy theme.css by hand or load it from a CDN.",
-    "No sideways scroll at 390px; light and dark both designed."
+    "No sideways scroll at 390px; light and dark both designed.",
+    "Page content uses var(--page-width) so its edges line up with the header; cap long prose at var(--measure), not whole sections."
   ]
 }
