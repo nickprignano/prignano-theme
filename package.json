@@ -1,7 +1,7 @@
 {
   "name": "prignano-theme",
-  "version": "0.9.0",
-  "description": "Shared header, colors, dark-mode toggle and line art for prignano.ai and its subdomains",
+  "version": "0.10.0",
+  "description": "Shared header, footer, page width, colors, dark-mode toggle and line art for prignano.ai and its subdomains",
   "license": "MIT",
   "type": "module",
   "exports": {

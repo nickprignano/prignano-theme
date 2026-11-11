@@ -1,7 +1,7 @@
 /* Colors, type and header shared by prignano.ai and its subdomains.
    Dark mode follows the system unless the reader picks one with the toggle
-   (html[data-theme]). Sites set --ph-width to line the header up with their
-   content. */
+   (html[data-theme]). Every page on every site uses the same content width
+   (--page-width), so the header, footer and page content share their edges. */
 :root {
   --bg: #f6f7f9;
   --fg: #111418;
@@ -49,6 +49,20 @@
   color-scheme: dark;
 }
 
+/* Layout: one content width for every page, 24px from the window edges (16px
+   on phones) up to 1080px. Put page content in .ph-page, or size it with
+   var(--page-width). Cap long prose at var(--measure) for readable lines. */
+:root {
+  --page-max: 1080px;
+  --page-gutter: 24px;
+  --page-width: min(var(--page-max), calc(100vw - 2 * var(--page-gutter)));
+  --measure: 72ch;
+}
+@media (max-width: 720px) {
+  :root { --page-gutter: 16px; }
+}
+.ph-page { width: var(--page-width); margin-inline: auto; }
+
 body {
   margin: 0;
   background: var(--bg);
@@ -63,7 +77,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 
 /* Header: avatar, name and bio on the left, links and the theme toggle on the right. */
 .ph-header {
-  width: var(--ph-width, min(1080px, calc(100vw - 48px)));
+  width: var(--ph-width, var(--page-width));
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -93,7 +107,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 }
 
 @media (max-width: 720px) {
-  .ph-header { --ph-width: calc(100vw - 32px); flex-wrap: wrap; gap: 10px 12px; }
+  .ph-header { flex-wrap: wrap; gap: 10px 12px; }
   .ph-avatar { width: 44px; height: 44px; }
   .ph-identity { gap: 12px; }
   .ph-name { font-size: 1.25rem; }
@@ -101,6 +115,21 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .ph-links { margin-left: 0; width: 100%; justify-content: flex-start; font-size: 0.925rem; }
 }
 
+/* Footer: the copyright line, an optional site note and links, on the page width. */
+.ph-footer {
+  width: var(--ph-width, var(--page-width));
+  margin: 64px auto 0;
+  padding: 24px 0 40px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.ph-footer p { margin: 4px 0; }
+/* Links inside footer text need more than color to stand out from it. */
+.ph-footer p a { text-decoration: underline; text-underline-offset: 2px; }
+.ph-footer .ph-footer-links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+
 @media print {
-  .ph-header { display: none; }
+  .ph-header, .ph-footer { display: none; }
 }
