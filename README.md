@@ -1,6 +1,6 @@
 # prignano-theme
 
-The shared look for prignano.ai and every site under it (blog.prignano.ai and any future `*.prignano.ai` site): colors, dark mode, one page width for every page, the header with the avatar, name, bio, shared links and theme toggle, and the footer.
+The shared look for prignano.ai and every site under it (blog.prignano.ai and any future `*.prignano.ai` site): colors, dark mode, one page width for every page, the header with the avatar, name, bio, shared links and theme toggle, the footer, and the generative line art drawn on the cards and in Vibes.
 
 It's plain CSS and JavaScript with no dependencies and no build step, so it works in Next.js, Astro or a static page.
 
@@ -11,6 +11,7 @@ It's plain CSS and JavaScript with no dependencies and no build step, so it work
 - `footerHtml(options)`: the footer's HTML: the copyright line, an optional site note, then GitHub, LinkedIn and the site's own links.
 - `THEME_INIT_SCRIPT`: a one-line script to inline in `<head>` so a saved theme applies before the first paint.
 - `initThemeToggle()`: wires up the toggle in the browser.
+- `art/`: the line-art library (below). It has no CSS or header dependency.
 - `NAV` and `OWNER`: the shared links (Blog, Contact, Games, Projects, Resume, and the Book me to speak pill) and the name, avatar and contact email. Contact goes to the contact page on prignano.ai, which lists Nick's socials and has the message form; Book me to speak opens the same form with the speaking topic picked.
 
 Dark mode follows the system setting until the reader picks one. The choice is saved in a cookie for the whole `prignano.ai` domain, so it follows them from site to site, with `localStorage` as a fallback.
@@ -81,6 +82,39 @@ import "prignano-theme/theme.css";
   initThemeToggle();
 </script>
 ```
+
+## Line art
+
+`art/index.js` draws generative line art on a canvas: the project and event cards on
+prignano.ai and every piece in Vibes come from it. Each style turns a seed into parameters,
+the parameters into polylines (both pure, tested in Node), and the library strokes them on a
+dark background.
+
+```js
+import { createPiece, pick } from "prignano-theme/art/index.js";
+
+const styles = pick(repos.map((r) => r.name)); // per card, no two neighbours alike
+const piece = createPiece(canvas, { seed: repo.name, color: languageColor, style: styles[i] });
+piece.step(0); // still frame; call step(dt) each animation frame to animate
+```
+
+- `mode: "full"` applies the full-screen safety limits (fewer, fainter, slower stripes), `"card"`
+  keeps the work light for small canvases. `grow: true` starts from nothing and grows in over
+  3 seconds; otherwise the piece starts at its settled still frame. `calm: true` halves the
+  speed and fades the lines.
+- 18 styles: flow trails, wave lines and harmonograph (from the original cards), gear curves,
+  rose, knot, wire solids, attractor, times tables, star polygons, circle lattice, star tiling,
+  rhomb tiling, hyperbolic, Voronoi, fractal curves, meander and epicycles. Each is one file in
+  `art/styles/`, marked `periodic` (a repeating grid or tiling) or `free`.
+- Stripes: periodic styles, and free ones with families of parallel lines (`stripes: true`),
+  state their `repeat` (the closest gap between parallel lines) and, when their lines are rebuilt
+  each frame, their `maxSpeed`.
+- Safety: `art/limits.js` holds the pattern limits (stripe repeat, width, contrast at every hue,
+  motion, line density) and the tests check every style against them. `art/flash.js` counts
+  flashes as WCAG 2.3.1 defines them. Before a pull request that adds or changes a style, run
+  `node tools/flash-scan.mjs` (needs Playwright with Chromium): it plays every style and
+  transition frame by frame and must report no flashes. `node tools/preview.mjs <dir>` saves a
+  still of each style.
 
 ## Changing the theme
 
