@@ -1,4 +1,4 @@
-export type NavId = "projects" | "resume" | "games" | "blog" | "github" | "speak" | "contact";
+export type NavId = "projects" | "resume" | "games" | "blog" | "speak" | "contact";
 
 /** `cta` draws the link as a bold pill. */
 export type Link = { id?: string; label: string; href: string; cta?: boolean };
@@ -20,6 +20,19 @@ export type HeaderOptions = {
 };
 
 export declare function headerHtml(options?: HeaderOptions): string;
+
+export declare const FOOTER_LINKS: ReadonlyArray<Pick<Link, "label" | "href">>;
+
+export type FooterOptions = {
+  /** HTML added after the copyright line, such as a license note. Not escaped. */
+  note?: string;
+  /** Site-specific links placed after the shared ones. */
+  links?: Pick<Link, "label" | "href">[];
+  /** Copyright year. Defaults to the current year. */
+  year?: number;
+};
+
+export declare function footerHtml(options?: FooterOptions): string;
 export declare const THEME_INIT_SCRIPT: string;
 export declare function saveTheme(theme: "light" | "dark"): void;
 export declare function initThemeToggle(): void;

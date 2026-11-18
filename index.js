@@ -18,9 +18,14 @@ export const NAV = [
   { id: "resume", label: "Resume", href: "https://prignano.ai/resume" },
   { id: "games", label: "Games", href: "https://prignano.ai/games" },
   { id: "blog", label: "Blog", href: "https://blog.prignano.ai/" },
-  { id: "github", label: "GitHub", href: "https://github.com/nickprignano" },
   { id: "speak", label: "Book me to speak", href: "https://prignano.ai/contact?topic=speaking", cta: true },
   { id: "contact", label: "Contact", href: "https://prignano.ai/contact" },
+];
+
+/** Links in every footer, before the site's own. */
+export const FOOTER_LINKS = [
+  { label: "GitHub", href: "https://github.com/nickprignano" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/nickprignano" },
 ];
 
 const STORAGE_KEY = "theme";
@@ -58,6 +63,20 @@ export function headerHtml({ current, bio, home = "https://prignano.ai/", links 
     `<button class="ph-theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">` +
     `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path></svg>` +
     `</button>${nav}</nav></header>`
+  );
+}
+
+/**
+ * The footer's HTML: the copyright line, then the shared links and the site's
+ * own `links`. `note` is HTML the site writes itself (such as a license line),
+ * added after the copyright; it is not escaped.
+ */
+export function footerHtml({ note = "", links = [], year = new Date().getFullYear() } = {}) {
+  const items = [...FOOTER_LINKS, ...links].map((l) => `<a href="${escape(l.href)}">${escape(l.label)}</a>`).join("");
+  return (
+    `<footer class="ph-footer">` +
+    `<p>© ${escape(year)} ${escape(OWNER.name)}.${note ? ` ${note}` : ""}</p>` +
+    `<p class="ph-footer-links">${items}</p></footer>`
   );
 }
 
